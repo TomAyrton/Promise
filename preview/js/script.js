@@ -48,3 +48,40 @@ for (var i = 0; i < pictures.length; i++) {
 	}
 	pictures[i].addEventListener('click', clickPicture.bind(null, i));
 }
+
+
+'use strict'
+
+window.onload = btnClick();
+
+var countTask = 0;
+
+function btnClick() {
+
+    function addListItem() {
+        return new Promise(function (resolve) {
+            var btnAdd = document.querySelector('.btnAdd');
+            if (btnAdd) {
+                btnAdd.addEventListener('click', function () {
+                    resolve();
+                })
+            }
+        });
+    }
+
+    addListItem()
+        .then(function () {
+            var taskList = document.querySelector('.taskList');
+            var newTask = document.querySelector('.newTask');
+            var taskName = newTask.value;
+            if (!taskName) {
+                return;
+            }
+            var taskItem = document.createElement('li');
+            taskItem.textContent = taskName;
+            taskList.append(taskItem);
+            newTask.value = '';
+            return addListItem();
+        })
+
+}
